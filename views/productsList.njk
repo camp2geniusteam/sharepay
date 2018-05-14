@@ -1,0 +1,41 @@
+{% extends "layout.njk" %}
+
+{% block breadcrumb %}
+	{% for breadcrumbItem in breadcrumbItems %}
+		{% if (loop.index < breadcrumbItems.length) %}
+			<li class="breadcrumb-item"><a href="{{breadcrumbItem.link}}">{{breadcrumbItem.label}}</a></li>
+		{% else %}
+			<li class="breadcrumb-item active" aria-current="page">{{breadcrumbItem.label}}</li>
+		{% endif %}
+   {% endfor %}
+{% endblock %}
+
+
+{% block content %}
+<div class="album py-2 bg-light">
+  <div class="container">
+	<div class="row">
+		<div class="col">
+			<p class="">{{products.length}} produits</p>
+		</div>
+	</div>
+    <div class="row">
+      {% for product in products %}
+      <div class="col-10 col-lg-3">
+
+        <div class="card mb-4 box-shadow">
+          <img class="card-img-top" src="{{product.image_path}}" alt="Decathlon">
+          <div class="card-body">
+            <a href="/products/{{product.id}}/category/{{product.category_id}}">
+              <p class="card-text">{{product.title}}</p>
+            </a>
+            <small class="text-muted">Réf: {{product.decathlon_id}}</small>
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+$primary-color: tomato;
+$secondary-color: lightblue;
+$font-size: 16px;
+
+h1 {
+  color: $primary-color;
+  border: 1px solid $primary-color;
+  font-size: $font-size * 1.5; /* will be 24px */
+}
+
+$font-size-base: 1rem;
+
+@import "./../../node_modules/bootstrap/scss/bootstrap";
