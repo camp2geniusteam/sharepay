@@ -1,6 +1,6 @@
 const genericSql = require("./genericSql");
 
-const tableName = "activities"
+const tableName = "expenses"
 
 function findAll() {
   return genericSql.findAll(tableName);
@@ -9,8 +9,6 @@ function findAll() {
 function findById(id) {
   return genericSql.findById(tableName, id);
 }
-
-
 
 module.exports = {
   findAll: findAll,

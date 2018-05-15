@@ -15,7 +15,28 @@ function getActivityWithDetail(activityId) {
 }
 
 function getAllActivities() {
-  return activities.findAll();
+return activities.findAll()
+  .then(activities => {
+    return activities.map(activity => {
+      activity.total_amount = 200;
+      activity.members = [{firstname: "christophe", lastname: "Delattre"},
+        {firstname: "damien", lastname: "Desprez"}];
+        return activity;
+      });
+  });
+}
+
+function getAllActivitiesByUser(email, activityStatus) {
+  return activities.findAll()
+  .then(activities => {
+    return activities.map(activity => {
+
+      activity.total_amount = 200;
+      activity.members = [{firstname: "christophe", lastname: "Delattre"},
+        {firstname: "damien", lastname: "Desprez"}];
+        return activity;
+      });
+  });
 }
 
 
