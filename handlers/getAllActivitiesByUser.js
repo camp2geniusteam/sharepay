@@ -1,10 +1,10 @@
 const activitiesService = require("../services/activitiesService");
 
-function getActivities(request, result) {
+function getAllActivities(request, result) {
   activitiesService.getAllActivities()
   .then((rows) => {
     result.json(rows);
-    result.render(rows);
+    result.render
   });
 }
 
