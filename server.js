@@ -24,6 +24,7 @@ app.get("/activities/:id/", getActivity);
 
 app.get("*", function(request, result) {
   result.send("page not found !!");
+  result.render("home")
 })
 
 app.listen(port, function () {
