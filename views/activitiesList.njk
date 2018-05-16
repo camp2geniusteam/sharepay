@@ -1,0 +1,36 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-md-center mb-2">
+    <h1>Activities</h1>
+      <div class="w-100"></div>
+      <button class="btn btn-outline-success" type="submit">ADD</button>
+      <button class="btn btn-outline-success" type="submit">history</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md">
+      <table class="table table-striped text-center">
+        {% for activity in activities %}
+        <tr>
+          <td>
+              <span>{{activity.title}}</span>
+              <span>{{activity.id}}</span>
+              <span>{{activity.totalAmount}}€</span>
+              <a class="btn btn-outline-primary" href="#" role="button">View</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+{# <button type="button" class="btn btn-info">Add</button>
+<button type="button" class="btn btn-light">History</button> #}
