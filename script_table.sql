@@ -11,6 +11,8 @@ password character varying(255) NOT NULL
 ALTER TABLE users
 ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
+ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE (email);
+
 CREATE TABLE activities (
 id uuid DEFAULT uuid_generate_v4() NOT NULL,
 title character varying(255) NOT NULL,
