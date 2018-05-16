@@ -127,8 +127,18 @@ function getAllActivitiesByUser(email, activityStatus) {
   })
 }
 
+function createNewActivity(activity) {
+  activityEntity = {};
+  activityEntity.title = activity.title;
+  activityEntity.id_owner = activity.owner.id;
+  activityEntity.status = "1";
+
+  return activities.insertActivity(activityEntity);
+}
+
 module.exports = {
   getActivityWithDetail: getActivityWithDetail,
   getAllActivities: getAllActivities,
-  getAllActivitiesByUser: getAllActivitiesByUser
+  getAllActivitiesByUser: getAllActivitiesByUser,
+  createNewActivity: createNewActivity
 }

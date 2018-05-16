@@ -66,9 +66,30 @@ function getActivitiesByMember(user_id) {
     });
 }
 
+function insertActivity(activity) {
+  const client = new PG.Client(process.env.DATABASE_URL);
+  client.connect();
+
+  return client.query(
+    "insert into activities (title, id_owner, status) values "
+    + " ($1::varchar, $2::uuid, $3::varchar)"
+    + " returning (id)",
+    [activity.title, activity.id_owner, activity.status])
+    .then((result) => result.rows)
+    .then((data) => {
+      client.end();
+	    return data[0];
+    })
+    .catch((error) => {
+      console.warn(error);
+      client.end();
+    });
+}
+
 module.exports = {
   findAll: findAll,
   findById: findById,
   getActivitiesByOwner: getActivitiesByOwner,
-  getActivitiesByMember: getActivitiesByMember
+  getActivitiesByMember: getActivitiesByMember,
+  insertActivity: insertActivity
 }

@@ -5,11 +5,11 @@ function findByEmail(email) {
   client.connect();
 
   return client.query(
-    "select * from users u where u.email=$1::varchar",
+    "select u.id, u.firstname, u.lastname, u.email, u.password "
+    + " from users u where u.email=$1::varchar",
     [email])
     .then((result) => result.rows)
     .then((data) => {
-      console.log("user=", data);
       client.end();
 	    return data[0];
     })
