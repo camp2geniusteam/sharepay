@@ -1,5 +1,6 @@
 const getActivities = require("./handlers/getActivities");
 const getActivity = require("./handlers/getActivity");
+const getAllActivitiesByUser = require ("./handlers/getAllActivitiesByUser");
 
 const express = require("express");
 const app = express();
@@ -19,12 +20,18 @@ app.use(express.static("public"));
 
 
 app.get("/", getActivities);
+
+
 app.get("/activities", getActivities);
+
+app.get("/activitiesUser/:email",getAllActivitiesByUser);
+
+
+
 app.get("/activities/:id/", getActivity);
 
 app.get("*", function(request, result) {
   result.send("page not found !!");
-  result.render("home")
 })
 
 app.listen(port, function () {

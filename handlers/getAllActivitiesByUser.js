@@ -1,11 +1,11 @@
 const activitiesService = require("../services/activitiesService");
 
-function getAllActivities(request, result) {
-  activitiesService.getAllActivities()
+function getAllActivitiesByUser(request, result) {
+  activitiesService.getAllActivitiesByUser(request.params,"1")
   .then((rows) => {
-    result.json(rows);
-    result.render
+    //result.json(rows);
+    result.render("activitiesList",{"activities":rows});
   });
 }
 
-module.exports = getActivities;
+module.exports = getAllActivitiesByUser;
