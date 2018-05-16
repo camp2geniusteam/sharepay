@@ -64,7 +64,7 @@ function grabUserCredentials(userId, callback) {
     name: null
   };
 
-  knex.select("user.id", , 'users.username', 'users.password',
+  knex.select("user.id",  "users.username", "users.password",
               "facebook.token as fb_token", "facebook.email as fb_email", "facebook.name as fb_name")
     .from("users")
     .leftOuterJoin("facebook")
