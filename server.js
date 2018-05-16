@@ -19,8 +19,12 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt-nodejs");
 const passport = require("passport");
 const authRouter = require("./services/authRouter");
+// const authentication = require("./services/authentication");
+
+// authentication.authentication(passport);
 
 require("./services/authentication")(passport);
+
 
 app.use(bodyParser.urlencoded({
   extended: true
