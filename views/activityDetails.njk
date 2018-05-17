@@ -1,0 +1,53 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-md-center mb-2">
+    <h1>Activity Detail</h1>
+    <div class="w-100"></div>
+      <a class="btn btn-outline-primary" href="/activitiesUser/damien.desprez@decathlon.com" role="button">Home</a>
+      <a class="btn btn-outline-primary" href="#" role="button">Edit</a>
+      <a class="btn btn-outline-primary" href="#" role="button">Add expense</a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md">
+      <h3>{{activity.title}}: {{activity.totalAmount}}€</h3>
+      <table class="table table-striped text-center">
+        {% for member in activity.members %}
+        <tr>
+          <td>
+              <span>{{member.firstname}}:{{expense.amount}}€</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h3>Expenses</H3>
+    <table class="table table-striped text-center">
+      {% for expense in activity.expenses %}
+      <tr>
+        <td>
+            <span>{{expense.title}}: {{expense.amount}}€ paid by {{expense.payer.firstname}} - </span>
+            <span>Participants: {{expense.members.length}}</span>
+            <a class="btn btn-outline-primary" href="/Expenses/{{expense.id}}/" role="button">View</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+</div>
+{% endblock %}
+
+
+
+
+{# <span>{{activity.members}}</span>
+<span>{{activity.totalAmount}}€</span>
+<span>{{activity.expenses}}€</span> #}
