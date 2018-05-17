@@ -16,9 +16,10 @@ nunjucks.configure("views", {
 /**************Authentication****************/
 const session = require("express-session");
 const bodyParser = require("body-parser");
-const bcrypt = require("bcrypt-nodejs");
+// const bcrypt = require("bcrypt-nodejs");
 const passport = require("passport");
 const authRouter = require("./services/authRouter");
+const authFacebook = require("./services/authFacebook");
 // const authentication = require("./services/authentication");
 
 // authentication.authentication(passport);
@@ -49,7 +50,9 @@ app.use(express.static("public"));
 
 
 
-app.get("/", authRouter);
+app.use("/", authRouter);
+
+app.use("/auth", authFacebook);
 
 app.get("/activities", getActivities);
 
@@ -59,9 +62,9 @@ app.get("/activitiesUser/:email",getAllActivitiesByUser);
 
 app.get("/activities/:id/", getActivity);
 
-app.get("*", function(request, result) {
-  result.send("page not found !!");
-})
+// app.get("*", function(request, result) {
+//   result.send("page not found !!");
+// })
 
 app.listen(port, function () {
   console.log("Server listening on port:" + port);
