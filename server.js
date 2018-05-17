@@ -59,10 +59,12 @@ app.use("/", authRouter);
 
 app.use("/auth", authFacebook);
 
-app.get("/activities", getActivities);
+app.get("/activities",
+  require("connect-ensure-login").ensureLoggedIn(),
+  getAllActivitiesByUser);
 
 app.get("/activitiesUser/:id/history",getAllActivitiesByUserHistory);
-app.get("/activitiesUser/:id",getAllActivitiesByUser);
+app.get("/activitiesUser/:id", getAllActivitiesByUser);
 
 app.get("/activities/:id/", getActivity);
 app.get("/Expenses/:id/",getExpenseFromActivity);

@@ -74,4 +74,3 @@ ALTER TABLE expense_members
 ADD CONSTRAINT fk_expense_members_users
 FOREIGN KEY (id_user) REFERENCES users(id);
 
-CREATE EXTENSION "pgcrypto";
