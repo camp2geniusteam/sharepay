@@ -36,7 +36,7 @@
         <td>
             <span>{{expense.title}}: {{expense.amount}}€ paid by {{expense.payer.firstname}} - </span>
             <span>Participants: {{expense.members.length}}</span>
-            <a class="btn btn-outline-primary" href="#" role="button">View</a>
+            <a class="btn btn-outline-primary" href="/Expenses/{{expense.id}}/" role="button">View</a>
         </td>
       </tr>
       {% endfor %}

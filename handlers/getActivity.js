@@ -12,14 +12,14 @@ function getActivity(request, result) {
 module.exports = getActivity;
 
 
-
+//
 //
 // const activitiesService = require("../services/activitiesService");
 //
 // function getActivity(request, result) {
 //   activitiesService.getActivityWithDetail(request.params.id)
 //   .then((activity) => {
-//     // result.json(rows);
+//     result.json(rows);
 //
 //     const expensesByPayer = [];
 //     activity.expenses.forEach(expense => {

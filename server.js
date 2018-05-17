@@ -4,6 +4,7 @@ const getAllActivitiesByUser = require ("./handlers/getAllActivitiesByUser");
 const getActivityHeader = require ("./handlers/getActivityHeader");
 const getActivityHeaderNew = require ("./handlers/getActivityHeaderNew");
 const saveActivityHeader = require ("./handlers/saveActivityHeader");
+const getExpenseFromActivity = require ("./handlers/getExpenseFromActivity")
 
 const express = require("express");
 const app = express();
@@ -59,6 +60,7 @@ app.get("/activities", getActivities);
 app.get("/activitiesUser/:email",getAllActivitiesByUser);
 
 app.get("/activities/:id/", getActivity);
+app.get("/Expenses/:id/",getExpenseFromActivity);
 
 app.get("/activityHeader/:id/", getActivityHeader);
 app.get("/activityHeaderNew", getActivityHeaderNew);
