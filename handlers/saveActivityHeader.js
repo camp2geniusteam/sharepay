@@ -8,7 +8,7 @@ function saveActivityHeader(request, result) {
       result.redirect(`/activityHeader/${activityId}`);
     });
   } else {
-    const currentUser = {"id": "4e0d0150-ee87-4878-a0c0-0f724a1fa4f1"}; // TO COMPLETE WITH CONNEXION INFORMATION
+    const currentUser = request.session.userTemp; // TO COMPLETE WITH CONNEXION INFORMATION
     activitiesService.createActivityHeader(request.body, currentUser)
     .then(activityId => {
       result.redirect(`/activityHeader/${activityId}`);

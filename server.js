@@ -1,9 +1,11 @@
 const getActivities = require("./handlers/getActivities");
 const getActivity = require("./handlers/getActivity");
 const getAllActivitiesByUser = require ("./handlers/getAllActivitiesByUser");
+const getAllActivitiesByUserHistory = require ("./handlers/getAllActivitiesByUserHistory");
 const getActivityHeader = require ("./handlers/getActivityHeader");
 const getActivityHeaderNew = require ("./handlers/getActivityHeaderNew");
 const saveActivityHeader = require ("./handlers/saveActivityHeader");
+const loginTemp = require ("./handlers/loginTemp");
 
 const express = require("express");
 const app = express();
@@ -49,14 +51,12 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "njk");
 app.use(express.static("public"));
 
-
-
-
 app.get("/", authRouter);
 
 app.get("/activities", getActivities);
 
-app.get("/activitiesUser/:email",getAllActivitiesByUser);
+app.get("/activitiesUser/:id/history",getAllActivitiesByUserHistory);
+app.get("/activitiesUser/:id",getAllActivitiesByUser);
 
 app.get("/activities/:id/", getActivity);
 
@@ -64,6 +64,7 @@ app.get("/activityHeader/:id/", getActivityHeader);
 app.get("/activityHeaderNew", getActivityHeaderNew);
 app.post("/activityHeader", saveActivityHeader);
 
+app.get("/loginTemp/:email", loginTemp);
 
 app.get("*", function(request, result) {
   result.send("page not found !!");
