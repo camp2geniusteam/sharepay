@@ -5,7 +5,7 @@ function getActivity(request, result) {
   activitiesService.getActivityWithDetail(request.params.id)
   .then((rows) => {
     // result.json(rows);
-    result.render("activityDetails",{"activity":rows});
+    result.render("activityDetails",{"activity": rows});
   });
 }
 

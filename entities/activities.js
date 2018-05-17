@@ -78,7 +78,28 @@ function insertActivity(activity) {
     .then((result) => result.rows)
     .then((data) => {
       client.end();
-	    return data[0];
+      console.log("data[0]=", data[0]);
+	    return data[0].id;
+    })
+    .catch((error) => {
+      console.warn(error);
+      client.end();
+    });
+}
+
+function updateTitle(activityId, activityTitle) {
+  //console.log("updateTitle=", activityId, activityTitle);
+  const client = new PG.Client(process.env.DATABASE_URL);
+  client.connect();
+
+  return client.query(
+    "update activities set title=$1::varchar where id=$2::uuid returning (id)",
+    [activityTitle, activityId])
+    .then((result) => result.rows)
+    .then((data) => {
+      client.end();
+      //console.log("data=", data);
+	    return data[0].id;
     })
     .catch((error) => {
       console.warn(error);
@@ -91,5 +112,6 @@ module.exports = {
   findById: findById,
   getActivitiesByOwner: getActivitiesByOwner,
   getActivitiesByMember: getActivitiesByMember,
-  insertActivity: insertActivity
+  insertActivity: insertActivity,
+  updateTitle: updateTitle
 }

@@ -1,6 +1,9 @@
 const getActivities = require("./handlers/getActivities");
 const getActivity = require("./handlers/getActivity");
 const getAllActivitiesByUser = require ("./handlers/getAllActivitiesByUser");
+const getActivityHeader = require ("./handlers/getActivityHeader");
+const getActivityHeaderNew = require ("./handlers/getActivityHeaderNew");
+const saveActivityHeader = require ("./handlers/saveActivityHeader");
 
 const express = require("express");
 const app = express();
@@ -57,7 +60,10 @@ app.get("/activitiesUser/:email",getAllActivitiesByUser);
 
 app.get("/activities/:id/", getActivity);
 
-// app.get("activities/:id/:expenses",getActivityWithDetail);
+app.get("/activityHeader/:id/", getActivityHeader);
+app.get("/activityHeaderNew", getActivityHeaderNew);
+app.post("/activityHeader", saveActivityHeader);
+
 
 app.get("*", function(request, result) {
   result.send("page not found !!");
