@@ -100,6 +100,7 @@ function getAllExpensesFromActivity(activityId) {
 
 function getAllActivitiesByUser(userId, activityStatus) {
    console.log("getAllActivitiesByUser", userId);
+   activities.getActivitiesByOwner(userId).then(res => console.log("fefefefe", res));
    return Promise.all([activities.getActivitiesByOwner(userId), activities.getActivitiesByMember(userId)])
 	.then(values => {
     const activitiesIdFound = [];

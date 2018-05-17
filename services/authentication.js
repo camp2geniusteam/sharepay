@@ -1,6 +1,6 @@
 // const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
-const userAuth = require("../entities/userAuth");
+const userAuth = require("../handlers/userAuth");
 // const User = userModel.User;
 const FB = require("fb");
 // const bcrypt = require("bcrypt-nodejs");
@@ -85,9 +85,7 @@ module.exports = function (passport) {
           "me",
           { fields: "id,first_name,last_name,email", access_token: accessToken },
           function(userFacebook) {
-            console.log("userFacebook", userFacebook);
             userAuth.findUserByEmail(userFacebook.email).then(user => {
-              console.log("user", user);
               if(user){
                 return user;
               }else {
