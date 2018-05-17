@@ -5,7 +5,7 @@ const users = require("../entities/users");
 function getActivityHeaderNew(request, result) {
   users.findAll()
   .then(users => {
-    result.render("activityHeader",{"activity": activitiesService.newActivity(), "usersNoMember": users});
+    result.render("activityHeader",{"user": request.session.userTemp, "activity": activitiesService.newActivity(), "usersNoMember": users});
   });
 }
 

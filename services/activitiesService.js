@@ -98,10 +98,9 @@ function getAllExpensesFromActivity(activityId) {
   });
 }
 
-function getAllActivitiesByUser(email, activityStatus) {
-   console.log("getAllActivitiesByUser", email);
-   return users.findByEmail(email)
-  .then(user => Promise.all([activities.getActivitiesByOwner(user.id), activities.getActivitiesByMember(user.id)]))
+function getAllActivitiesByUser(userId, activityStatus) {
+   console.log("getAllActivitiesByUser", userId);
+   return Promise.all([activities.getActivitiesByOwner(userId), activities.getActivitiesByMember(userId)])
 	.then(values => {
     const activitiesIdFound = [];
     values[0].concat(values[1]).forEach(activity => {
