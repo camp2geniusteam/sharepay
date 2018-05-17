@@ -17,10 +17,9 @@
         {% for activity in activities %}
         <tr>
           <td>
-              <span>{{activity.title}}</span>
-              <span>{{activity.id}}</span>
+              <span>{{activity.title}}: </span>
               <span>{{activity.totalAmount}}€</span>
-              <a class="btn btn-outline-primary" href="#" role="button">View</a>
+              <a class="btn btn-outline-primary" href="/activities/{{activity.id}}/" role="button">View</a>
           </td>
         </tr>
         {% endfor %}

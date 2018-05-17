@@ -55,9 +55,9 @@ app.get("/activities", getActivities);
 
 app.get("/activitiesUser/:email",getAllActivitiesByUser);
 
-
-
 app.get("/activities/:id/", getActivity);
+
+// app.get("activities/:id/:expenses",getActivityWithDetail);
 
 app.get("*", function(request, result) {
   result.send("page not found !!");
