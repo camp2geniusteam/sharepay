@@ -5,7 +5,10 @@ const getAllActivitiesByUserHistory = require ("./handlers/getAllActivitiesByUse
 const getActivityHeader = require ("./handlers/getActivityHeader");
 const getActivityHeaderNew = require ("./handlers/getActivityHeaderNew");
 const saveActivityHeader = require ("./handlers/saveActivityHeader");
+
+const getExpenseFromActivity = require ("./handlers/getExpenseFromActivity")
 const loginTemp = require ("./handlers/loginTemp");
+
 
 const express = require("express");
 const app = express();
@@ -59,6 +62,7 @@ app.get("/activitiesUser/:id/history",getAllActivitiesByUserHistory);
 app.get("/activitiesUser/:id",getAllActivitiesByUser);
 
 app.get("/activities/:id/", getActivity);
+app.get("/Expenses/:id/",getExpenseFromActivity);
 
 app.get("/activityHeader/:id/", getActivityHeader);
 app.get("/activityHeaderNew", getActivityHeaderNew);

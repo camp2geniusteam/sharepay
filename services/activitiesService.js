@@ -191,5 +191,6 @@ module.exports = {
   getAllActivitiesByUser: getAllActivitiesByUser,
   createActivityHeader: createActivityHeader,
   updateActivityHeader: updateActivityHeader,
-  newActivity: newActivity
+  newActivity: newActivity,
+  getAllExpensesFromActivity: getAllExpensesFromActivity
 }

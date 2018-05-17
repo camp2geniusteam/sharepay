@@ -1,0 +1,20 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-md-center mb-2">
+      <div class="w-100"></div>
+      <a class="btn btn-outline-primary" href="/activitiesUser/damien.desprez@decathlon.com" role="button">Dashboard</a>
+      <a class="btn btn-outline-primary" href="/activities/{{activity.id}}/" role="button">Back to the activity</a>
+      <h3>Describe your expense</h3>
+  </div>
+</div>
+<div class="container">
+  <form method="POST" action="/treatForm">
+    <input type="text" name="expenseLabel" placeholder="enter the name of your expense" />
+    <input type="password" name="valueEuro" placeholder="0" />
+    <input type="hidden" name="valueCent" value="00" />
+  </form>
+</div>
+
+{% endblock %}
