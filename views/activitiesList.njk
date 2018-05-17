@@ -5,19 +5,22 @@
   <div class="row mb-2">
     {% if (mode === "1") %}
       <h4>Your current activities</h4>
-    {% else %}
-      <h4>Your past activities</h4>
-    {% endif %}
       <div class="w-100 mb-2"></div>
       <a class="btn btn-outline-primary" href="/activityHeaderNew" role="button">+ Add an activity</a>&nbsp;
       <a class="btn btn-outline-primary" href="/activitiesUser/{{user.id}}/history" role="button">History</a>
+    {% else %}
+      <h4>Your past activities</h4>
+      <div class="w-100 mb-2"></div>
+      <a class="btn btn-outline-primary" href="/activitiesUser/{{user.id}}" role="button">Dashboard</a>
+    {% endif %}
+
   </div>
 </div>
 
 <div class="container">
   <div class="row">
     <div class="col-md">
-      <table class="table table-striped text-center">
+      <table class="table table-striped">
         {% for activity in activities %}
         <tr>
           <td>
@@ -27,7 +30,10 @@
               <span>created by {{activity.owner.firstname}}</span>
           </td>
           <td>
-              <span>amount : {{activity.totalAmount}} € - {{activity.members.length}} members</span>
+              <span>amount : {{activity.totalAmount}} €</span>
+          </td>
+          <td>
+              <span>{{activity.members.length}} members</span>
           </td>
           <td>
               <a class="btn btn-outline-primary" href="/activities/{{activity.id}}/" role="button">View</a>
@@ -40,8 +46,3 @@
   </div>
 </div>
 {% endblock %}
-
-
-
-{# <button type="button" class="btn btn-info">Add</button>
-<button type="button" class="btn btn-light">History</button> #}

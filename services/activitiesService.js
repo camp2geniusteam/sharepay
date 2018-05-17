@@ -19,6 +19,35 @@ function getActivityWithDetail(activityId) {
 	});
 }
 
+function getActivityWithDetailList(activityIdList) {
+  //console.log("activityIdList=", activityIdList);
+  if (activityIdList.length === 0) {
+    return [];
+  }
+  if (activityIdList.length>1) {
+    const activityIdCurrent = activityIdList.pop();
+    //console.log("activityIdCurrent=", activityIdCurrent);
+    return getActivityWithDetailList(activityIdList)
+    .then(activities => {
+       //console.log("activities=", activities);
+       return getActivityWithDetail(activityIdCurrent)
+       .then(activity => {
+          activities.push(activity);
+          return activities;
+       })
+     })
+  } else {
+    const activityIdCurrent = activityIdList[0];
+    //console.log("activityIdCurrent=", activityIdCurrent);
+    return getActivityWithDetail(activityIdCurrent)
+    .then(activity => {
+      const res = [activity];
+      //console.log("res=", res);
+      return res;
+    });
+  }
+}
+
 function getAllActivities() {
   return activities.findAll();
 }
@@ -98,6 +127,34 @@ function getAllExpensesFromActivity(activityId) {
   });
 }
 
+function getAllActivitiesByUserV2(userId, activityStatus) {
+   console.log("getAllActivitiesByUserV2", userId, ", activityStatus=", activityStatus);
+   return Promise.all([activities.getActivitiesByOwner(userId), activities.getActivitiesByMember(userId)])
+	.then(values => {
+    let activitiesFound = [];
+    activitiesFound = activitiesFound.concat(values[0]);
+    activitiesFound = activitiesFound.concat(values[1]);
+    //console.log("activitiesFound=", activitiesFound);
+    const activitiesIdFound = [];
+    activitiesFound.forEach(activity => {
+      if (activity.status === activityStatus && !activitiesIdFound.includes(activity.id)) {
+        activitiesIdFound.push(activity.id);
+      }
+    });
+    return activitiesIdFound;
+	})
+  .then(activitiesIdFound => {
+    //console.log("activitiesIdFound=", activitiesIdFound);
+    return getActivityWithDetailList(activitiesIdFound);
+  })
+  .then(values => {
+    const activitiesWithDetail = [];
+    values.forEach(value => activitiesWithDetail.push(value));
+    //console.log("activitiesWithDetail=", activitiesWithDetail);
+    return activitiesWithDetail;
+  })
+}
+
 function getAllActivitiesByUser(userId, activityStatus) {
    console.log("getAllActivitiesByUser", userId);
    activities.getActivitiesByOwner(userId).then(res => console.log("fefefefe", res));
@@ -109,7 +166,7 @@ function getAllActivitiesByUser(userId, activityStatus) {
         activitiesIdFound.push(activity.id);
       }
     });
-	  //console.log("activitiesIdFound=", activitiesIdFound);
+	  console.log("activitiesIdFound=", activitiesIdFound);
     return activitiesIdFound;
 	})
   .then(activitiesIdFound => {
@@ -189,7 +246,7 @@ function newActivity(owner) {
 module.exports = {
   getActivityWithDetail: getActivityWithDetail,
   getAllActivities: getAllActivities,
-  getAllActivitiesByUser: getAllActivitiesByUser,
+  getAllActivitiesByUser: getAllActivitiesByUserV2,
   createActivityHeader: createActivityHeader,
   updateActivityHeader: updateActivityHeader,
   newActivity: newActivity,
