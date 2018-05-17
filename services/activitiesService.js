@@ -127,18 +127,70 @@ function getAllActivitiesByUser(email, activityStatus) {
   })
 }
 
-function createNewActivity(activity) {
-  activityEntity = {};
-  activityEntity.title = activity.title;
-  activityEntity.id_owner = activity.owner.id;
-  activityEntity.status = "1";
+function updateActivityHeader(activityHeader) {
+  console.log("updateActivityHeader=", activityHeader);
+  return activities.findById(activityHeader.activityId)
+  .then(activity => {
+    console.log("activity.title=", activity.title, "activityHeader.activityTitle=", activityHeader.activityTitle);
+    if (activity.title !== activityHeader.activityTitle) {
+      return activities.updateTitle(activityHeader.activityId, activityHeader.activityTitle);
+    } else {
+      return activityHeader.activityId;
+    }
+  })
+  .then(activityId => activityMembers.deleteActivityMembersFromActivity(activityId))
+  .then(activityId => {
+    const promiseToDo = [];
+    if (activityHeader.activityMembersId.constructor === Array) {
+      activityHeader.activityMembersId.forEach(memberId => {
+        promiseToDo.push(activityMembers.insertActivityMember(activityId, memberId));
+      });
+    } else {
+      promiseToDo.push(activityMembers.insertActivityMember(activityId, activityHeader.activityMembersId));
+    }
+    return Promise.all(promiseToDo);
+  })
+  .then(res => activityHeader.activityId);
+}
 
-  return activities.insertActivity(activityEntity);
+function createActivityHeader(activityHeader, currentUser) {
+  //console.log("createActivityHeader=", activityHeader);
+  activityEntity = {};
+  activityEntity.title = activityHeader.activityTitle;
+  activityEntity.id_owner = currentUser.id;
+  activityEntity.status = "1";
+  activityIdInsert = "";
+
+  return activities.insertActivity(activityEntity)
+  .then(activityId => {
+    activityIdInsert = activityId;
+
+    const promiseToDo = [];
+    if (activityHeader.activityMembersId.constructor === Array) {
+      activityHeader.activityMembersId.forEach(memberId => {
+        promiseToDo.push(activityMembers.insertActivityMember(activityId, memberId));
+      });
+    } else {
+      promiseToDo.push(activityMembers.insertActivityMember(activityId, activityHeader.activityMembersId));
+    }
+    return Promise.all(promiseToDo);
+  })
+  .then(res => activityIdInsert);
+}
+
+function newActivity(owner) {
+  activity = {};
+  activity.title = "";
+  activity.members = [];
+  activity.expenses = [];
+  activity.totalAmount = 0;
 }
 
 module.exports = {
   getActivityWithDetail: getActivityWithDetail,
   getAllActivities: getAllActivities,
   getAllActivitiesByUser: getAllActivitiesByUser,
-  createNewActivity: createNewActivity
+  createActivityHeader: createActivityHeader,
+  updateActivityHeader: updateActivityHeader,
+  newActivity: newActivity
 }
