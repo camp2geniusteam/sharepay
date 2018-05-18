@@ -4,6 +4,7 @@ function getActivities(request, result) {
   activitiesService.getAllActivities()
   .then((rows) => {
     result.json(rows);
+    result.render(rows);
   });
 }
 
