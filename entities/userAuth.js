@@ -158,7 +158,7 @@ function findUserByEmail(email){
 
 function addUser(user){
   return client.query(
-    "insert into users(id, email, firstname, lastname, facebook_id) values (gen_random_uuid(), $1::varchar, $2::varchar, $3::varchar, $4::varchar)",
+    "insert into users(email, firstname, lastname, facebook_id) values ($1::varchar, $2::varchar, $3::varchar, $4::varchar) returning (id)",
     [user.email, user.first_name, user.last_name, user.id.toString()])
     .then(result => result.rows)
     .then(data => {
