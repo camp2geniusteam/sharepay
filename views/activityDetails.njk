@@ -2,53 +2,96 @@
 
 {% block content %}
 <div class="container">
-  <div class="row justify-content-md-center mb-2">
-    <h1>Activity Detail</h1>
-    <div class="w-100"></div>
-      <a class="btn btn-outline-primary" href="/activitiesUser/damien.desprez@decathlon.com" role="button">Home</a>
-      <a class="btn btn-outline-primary" href="#" role="button">Edit</a>
-      <a class="btn btn-outline-primary" href="#" role="button">Add expense</a>
-      <a class="btn btn-outline-primary" href="/accounts" role="button">Do the accounts</a>
+  <div class="row mt-2">
+      <div class="w-100"></div>
+      <a class="btn btn-outline-primary mr-2" href="/activitiesUser/{{user.id}}" role="button">Dashboard</a>
+      <a class="btn btn-outline-primary mr-2" href="#" role="button">Edit</a>
+      <a class="btn btn-outline-primary mr-2" href="#" role="button">Add expense</a>
+      <a class="btn btn-outline-primary mr-2" href="/accounts" role="button">Do the accounts</a>
   </div>
 </div>
 
-<div class="container">
+<div class="container mt-4">
   <div class="row">
-    <div class="col-md">
-      <h3>{{activity.title}}: {{activity.totalAmount}}€</h3>
-      <table class="table table-striped text-center">
-        {% for member in activity.members %}
-        <tr>
-          <td>
-              <span>{{member.firstname}}:{{expense.amount}}€</span>
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
-    </div>
+      <h4>Activity "{{activity.title}}" : {{activity.totalAmount}} €</h4>
+  </div>
+  <div class="row" style="height: 300px;">
+      <canvas id="myChart"></canvas>
   </div>
 </div>
 
-<div class="container">
-  <h3>Expenses</H3>
-    <table class="table table-striped text-center">
+<div class="container pt-6 mt-6">
+  <h4>Expenses</h4>
+    <table class="table table-striped">
       {% for expense in activity.expenses %}
       <tr>
         <td>
-            <span>{{expense.title}}: {{expense.amount}}€ paid by {{expense.payer.firstname}} - </span>
+            <span>{{expense.title}} : {{expense.amount}} €</span>
+        </td>
+        <td>
+            <span>paid by {{expense.payer.firstname}}</span>
+        </td>
+        <td>
             <span>Participants: {{expense.members.length}}</span>
-            <a class="btn btn-outline-primary" href="/Expenses/{{expense.id}}/" role="button">View</a>
+        </td>
+        <td>
+            <a class="btn btn-outline-primary" href="/Expenses/{{expense.id}}/" role="button">view expense</a>
         </td>
       </tr>
       {% endfor %}
     </table>
 
 </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [
+              {% for apayer in amountByPayer %}
+                "{{apayer.payer.firstname}} : {{apayer.totalAmount}} €",
+              {% endfor%}
+        ],
+        datasets: [{
+            label: 'Total expenses',
+            data: [
+              {% for apayer in amountByPayer %}
+                {{apayer.totalAmount}},
+              {% endfor%}
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        maintainAspectRatio: false
+    }
+});
+</script>
+
 {% endblock %}
-
-
-
-
-{# <span>{{activity.members}}</span>
-<span>{{activity.totalAmount}}€</span>
-<span>{{activity.expenses}}€</span> #}
