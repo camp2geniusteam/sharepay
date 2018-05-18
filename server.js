@@ -63,15 +63,15 @@ app.get("/activities",
   require("connect-ensure-login").ensureLoggedIn(),
   getAllActivitiesByUser);
 
-app.get("/activitiesUser/:id/history",getAllActivitiesByUserHistory);
+app.get("/activitiesUser/:id/history", require("connect-ensure-login").ensureLoggedIn(), getAllActivitiesByUserHistory);
 app.get("/activitiesUser/:id", getAllActivitiesByUser);
 
 app.get("/activities/:id/", getActivity);
-app.get("/Expenses/:id/",getExpenseFromActivity);
+app.get("/Expenses/:id/", require("connect-ensure-login").ensureLoggedIn(), getExpenseFromActivity);
 
-app.get("/activityHeader/:id/", getActivityHeader);
-app.get("/activityHeaderNew", getActivityHeaderNew);
-app.post("/activityHeader", saveActivityHeader);
+app.get("/activityHeader/:id/", require("connect-ensure-login").ensureLoggedIn(), getActivityHeader);
+app.get("/activityHeaderNew", require("connect-ensure-login").ensureLoggedIn(), getActivityHeaderNew);
+app.post("/activityHeader", require("connect-ensure-login").ensureLoggedIn(), saveActivityHeader);
 
 app.get("/loginTemp/:email", loginTemp);
 

@@ -1,6 +1,6 @@
 // const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
-const userAuth = require("../handlers/userAuth");
+const userAuth = require("../entities/userAuth");
 // const User = userModel.User;
 const FB = require("fb");
 // const bcrypt = require("bcrypt-nodejs");
