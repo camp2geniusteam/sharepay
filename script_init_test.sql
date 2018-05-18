@@ -74,6 +74,3 @@ insert into expenses (title, id_activity, id_payer, amount, status) select 'plan
     inner join users u on a.title='Transport' and u.email='damiendesprez@hotmail.fr';
 insert into expense_members(id_expense,id_user) select e.id,u.id from expenses e
     inner join users u on e.title='plane' and u.email='lydie_in_chine@hotmail.com';
-
-
-
