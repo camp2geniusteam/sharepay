@@ -11,7 +11,7 @@ function saveActivityHeader(request, result) {
     const currentUser = request.user; // TO COMPLETE WITH CONNEXION INFORMATION
     activitiesService.createActivityHeader(request.body, currentUser)
     .then(activityId => {
-      result.redirect(`/activityHeader/${activityId}`);
+      result.redirect(`/expense/${activityId}`);
     });
   }
 }
