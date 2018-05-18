@@ -104,9 +104,11 @@
 
 
 const PG = require("pg");
-const client = new PG.Client({
-  connectionString: process.env.DATABASE_URL
-});
+// const client = new PG.Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true
+// });
+const client = new PG.Client(process.env.DATABASE_URL);
 client.connect();
 
 
@@ -145,7 +147,6 @@ function findUserByEmail(email){
     [email])
     .then(result => result.rows)
     .then(data => {
-      console.log("data: ", data[0]);
       return data[0];
     })
     .catch(error => {

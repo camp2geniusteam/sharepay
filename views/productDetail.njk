@@ -1,0 +1,74 @@
+{% extends "layout.njk" %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="/categories">Categories</a></li>
+  <li class="breadcrumb-item">
+	<a href="/categories/{{currentCategory.id}}/products">{{currentCategory.label}}</a></li>
+  <li class="breadcrumb-item active" aria-current="page">{{product.title}}</li>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container pt-3">
+  <div class="row">
+    <div class="col-12 col-lg-6 border">
+        <img class="card-img-top" src="{{product.image_path}}" alt="Decathlon">
+    </div>
+    <div class="col-12 col-lg-6 mt-3">
+      <h6 class="">{{product.title}}</h6>
+      <p class="">{{product.min_price}} €</p>
+      <div id="star"></div>
+      <small class="text-muted">{{product.description}}</small>
+	  <h6 class="mt-2">Marque : {{product.brand.title}}</h6>
+	  <br>
+	  
+	  <p class="mb-0">Categories :</p>
+	 {% for category in product.categories %}
+      <div class="row text-primary">
+        <div class="col-12 col-lg-8">
+          <a href="/categories/{{category.id}}/products">{{category.label}}</a>
+        </div>
+      </div>
+    {% endfor %}
+	  
+    </div>
+  </div>
+</div>
+
+<script>
+  const rating = {{product.rating}};
+  const tmpStar = document.getElementById("star");
+  for (let i=1; i<=5; i++) {
+    if (i<=rating) {
+      tmpStar.innerHTML+="<i class='fas fa-star'></i>";
+    } else {
+      tmpStar.innerHTML+="<i class='far fa-star'></i>";
+    }
+  }
+  tmpStar.innerHTML+=" ";
+  tmpStar.innerHTML+=rating;
+</script>
+{% endblock %}
+
+
+{% block productHistory %}
+<div class="container pt-3 mb-3">
+  <p class="mb-0">Mes dernières consultations</p>
+  <div class="row pt-2">
+	{% for product in productsHistory.toDisplay %}
+      <div class="col-4 col-lg-2">
+        <div class="card box-shadow">
+		  <a href="/products/{{product.id}}/category/{{product.categoryId}}">
+            <img class="card-img-top" src="{{product.image_path}}" alt="Decathlon">
+            <div class="card-body">
+              <small class="text-muted">{{product.title}}</small>
+            </div>
+		  </a>  
+        </div>
+	  </div>
+    {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

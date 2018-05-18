@@ -1,4 +1,5 @@
 const PG = require("pg");
+
 const genericSql = require("./genericSql");
 
 const tableName = "activities";
