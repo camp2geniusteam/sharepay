@@ -62,8 +62,8 @@ app.use("/auth", authFacebook);
 
 app.get("/activities", require("connect-ensure-login").ensureLoggedIn(), getAllActivitiesByUser);
 
-app.get("/activitiesUser/:id/history", require("connect-ensure-login").ensureLoggedIn(), getAllActivitiesByUserHistory);
 app.get("/activitiesUser/:id", require("connect-ensure-login").ensureLoggedIn(), getAllActivitiesByUser);
+app.get("/activitiesUser/:id/history", require("connect-ensure-login").ensureLoggedIn(), getAllActivitiesByUserHistory);
 
 app.get("/activities/:id/", require("connect-ensure-login").ensureLoggedIn(), getActivity);
 app.get("/Expenses/:id/", require("connect-ensure-login").ensureLoggedIn(), getExpenseFromActivity);

@@ -3,32 +3,20 @@ const activitiesService = require("../services/activitiesService");
 
 function getActivity(request, result) {
   activitiesService.getActivityWithDetail(request.params.id)
-  .then((rows) => {
-    // result.json(rows);
-    result.render("activityDetails",{"user": request.user, "activity": rows});
+  .then((activity) => {
+    //group expense amount by payer
+    const amountByPayer = [];
+    activity.expenses.forEach(expense => {
+      const index = amountByPayer.findIndex(element => {return (element.payer.id === expense.payer.id)});
+      if (index >= 0) {
+        amountByPayer[index].totalAmount += expense.amount;
+      } else {
+        amountByPayer.push({"payer": expense.payer, "totalAmount": expense.amount})
+      }
+    });
+
+    result.render("activityDetails",{"user": request.user, "activity": activity, "amountByPayer": amountByPayer});
   });
 }
 
 module.exports = getActivity;
-
-
-//
-//
-// const activitiesService = require("../services/activitiesService");
-//
-// function getActivity(request, result) {
-//   activitiesService.getActivityWithDetail(request.params.id)
-//   .then((activity) => {
-//     result.json(rows);
-//
-//     const expensesByPayer = [];
-//     activity.expenses.forEach(expense => {
-//       if(
-//
-//     });
-//
-//     result.render("activityDetails",{"activity": activity, "expensesByPayer" : expensesByPayer});
-//   });
-// }
-//
-// module.exports = getActivity;
