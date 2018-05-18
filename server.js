@@ -5,6 +5,7 @@ const getAllActivitiesByUserHistory = require ("./handlers/getAllActivitiesByUse
 const getActivityHeader = require ("./handlers/getActivityHeader");
 const getActivityHeaderNew = require ("./handlers/getActivityHeaderNew");
 const saveActivityHeader = require ("./handlers/saveActivityHeader");
+const accountsPayback = require("./services/accountsPayback");
 
 const getExpenseFromActivity = require ("./handlers/getExpenseFromActivity")
 const loginTemp = require ("./handlers/loginTemp");
@@ -59,19 +60,19 @@ app.use("/", authRouter);
 
 app.use("/auth", authFacebook);
 
-app.get("/activities",
-  require("connect-ensure-login").ensureLoggedIn(),
-  getAllActivitiesByUser);
+app.get("/activities", require("connect-ensure-login").ensureLoggedIn(), getAllActivitiesByUser);
 
 app.get("/activitiesUser/:id/history", require("connect-ensure-login").ensureLoggedIn(), getAllActivitiesByUserHistory);
-app.get("/activitiesUser/:id", getAllActivitiesByUser);
+app.get("/activitiesUser/:id", require("connect-ensure-login").ensureLoggedIn(), getAllActivitiesByUser);
 
-app.get("/activities/:id/", getActivity);
+app.get("/activities/:id/", require("connect-ensure-login").ensureLoggedIn(), getActivity);
 app.get("/Expenses/:id/", require("connect-ensure-login").ensureLoggedIn(), getExpenseFromActivity);
 
 app.get("/activityHeader/:id/", require("connect-ensure-login").ensureLoggedIn(), getActivityHeader);
 app.get("/activityHeaderNew", require("connect-ensure-login").ensureLoggedIn(), getActivityHeaderNew);
 app.post("/activityHeader", require("connect-ensure-login").ensureLoggedIn(), saveActivityHeader);
+
+app.get("/accounts/:id", require("connect-ensure-login").ensureLoggedIn(), accountsPayback.getActivityForAccount);
 
 app.get("/loginTemp/:email", loginTemp);
 
