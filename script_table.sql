@@ -2,10 +2,11 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE users (
 id uuid DEFAULT uuid_generate_v4() NOT NULL,
-firstname character varying(255) NOT NULL,
-lastname character varying(255) NOT NULL,
+firstname character varying(255),
+lastname character varying(255),
 email character varying(255) NOT NULL,
-password character varying(255) NOT NULL
+password character varying(255),
+facebook_id character VARYING(255)
 );
 
 ALTER TABLE users
@@ -72,3 +73,4 @@ FOREIGN KEY (id_expense) REFERENCES expenses(id);
 ALTER TABLE expense_members
 ADD CONSTRAINT fk_expense_members_users
 FOREIGN KEY (id_user) REFERENCES users(id);
+

@@ -8,7 +8,7 @@ function saveActivityHeader(request, result) {
       result.redirect(`/activityHeader/${activityId}`);
     });
   } else {
-    const currentUser = request.session.userTemp; // TO COMPLETE WITH CONNEXION INFORMATION
+    const currentUser = request.user; // TO COMPLETE WITH CONNEXION INFORMATION
     activitiesService.createActivityHeader(request.body, currentUser)
     .then(activityId => {
       result.redirect(`/activityHeader/${activityId}`);

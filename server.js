@@ -24,9 +24,10 @@ nunjucks.configure("views", {
 /**************Authentication****************/
 const session = require("express-session");
 const bodyParser = require("body-parser");
-const bcrypt = require("bcrypt-nodejs");
+// const bcrypt = require("bcrypt-nodejs");
 const passport = require("passport");
 const authRouter = require("./services/authRouter");
+const authFacebook = require("./services/authFacebook");
 // const authentication = require("./services/authentication");
 
 // authentication.authentication(passport);
@@ -54,25 +55,29 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "njk");
 app.use(express.static("public"));
 
-app.get("/", authRouter);
+app.use("/", authRouter);
 
-app.get("/activities", getActivities);
+app.use("/auth", authFacebook);
 
-app.get("/activitiesUser/:id/history",getAllActivitiesByUserHistory);
-app.get("/activitiesUser/:id",getAllActivitiesByUser);
+app.get("/activities",
+  require("connect-ensure-login").ensureLoggedIn(),
+  getAllActivitiesByUser);
+
+app.get("/activitiesUser/:id/history", require("connect-ensure-login").ensureLoggedIn(), getAllActivitiesByUserHistory);
+app.get("/activitiesUser/:id", getAllActivitiesByUser);
 
 app.get("/activities/:id/", getActivity);
-app.get("/Expenses/:id/",getExpenseFromActivity);
+app.get("/Expenses/:id/", require("connect-ensure-login").ensureLoggedIn(), getExpenseFromActivity);
 
-app.get("/activityHeader/:id/", getActivityHeader);
-app.get("/activityHeaderNew", getActivityHeaderNew);
-app.post("/activityHeader", saveActivityHeader);
+app.get("/activityHeader/:id/", require("connect-ensure-login").ensureLoggedIn(), getActivityHeader);
+app.get("/activityHeaderNew", require("connect-ensure-login").ensureLoggedIn(), getActivityHeaderNew);
+app.post("/activityHeader", require("connect-ensure-login").ensureLoggedIn(), saveActivityHeader);
 
 app.get("/loginTemp/:email", loginTemp);
 
-app.get("*", function(request, result) {
-  result.send("page not found !!");
-})
+// app.get("*", function(request, result) {
+//   result.send("page not found !!");
+// })
 
 app.listen(port, function () {
   console.log("Server listening on port:" + port);
