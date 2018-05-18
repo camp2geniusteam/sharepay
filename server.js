@@ -5,6 +5,7 @@ const getAllActivitiesByUserHistory = require ("./handlers/getAllActivitiesByUse
 const getActivityHeader = require ("./handlers/getActivityHeader");
 const getActivityHeaderNew = require ("./handlers/getActivityHeaderNew");
 const saveActivityHeader = require ("./handlers/saveActivityHeader");
+const accountsPayback = require("./services/accountsPayback");
 
 const getExpenseFromActivity = require ("./handlers/getExpenseFromActivity")
 const loginTemp = require ("./handlers/loginTemp");
@@ -70,6 +71,8 @@ app.get("/Expenses/:id/", require("connect-ensure-login").ensureLoggedIn(), getE
 app.get("/activityHeader/:id/", require("connect-ensure-login").ensureLoggedIn(), getActivityHeader);
 app.get("/activityHeaderNew", require("connect-ensure-login").ensureLoggedIn(), getActivityHeaderNew);
 app.post("/activityHeader", require("connect-ensure-login").ensureLoggedIn(), saveActivityHeader);
+
+app.get("/accounts/:id", require("connect-ensure-login").ensureLoggedIn(), accountsPayback.getActivityForAccount);
 
 app.get("/loginTemp/:email", loginTemp);
 

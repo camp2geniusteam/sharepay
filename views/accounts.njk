@@ -1,0 +1,36 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="container">
+  <div class="row mb-2">
+    <h4>Rebalancing of "{{activity.title}}"</h4>
+    <div class="w-100 mb-2"></div>
+    <a class="btn btn-outline-primary" href="/activities" role="button">Dashboard</a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md">
+      <table class="table table-striped">
+        {% for payback in listPayback %}
+        <tr>
+          <td>
+              <span>{{payback.from}}</span>
+          </td>
+          <td>
+              <span>gives {{payback.value}} to</span>
+          </td>
+          <td>
+              <span>{{payback.to}} €</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
