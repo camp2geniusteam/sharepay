@@ -7,6 +7,7 @@ const getActivityHeaderNew = require ("./handlers/getActivityHeaderNew");
 const saveActivityHeader = require ("./handlers/saveActivityHeader");
 
 const getExpenseFromActivity = require ("./handlers/getExpenseFromActivity")
+const saveExpense = require ("./handlers/saveExpense")
 const loginTemp = require ("./handlers/loginTemp");
 
 
@@ -67,11 +68,12 @@ app.get("/activitiesUser/:id/history", require("connect-ensure-login").ensureLog
 app.get("/activitiesUser/:id", getAllActivitiesByUser);
 
 app.get("/activities/:id/", getActivity);
-app.get("/Expenses/:id/", require("connect-ensure-login").ensureLoggedIn(), getExpenseFromActivity);
-
+app.get("/expenses/:activityId/:expenseId", require("connect-ensure-login").ensureLoggedIn(), getExpenseFromActivity);
+app.get("/expenses/:activityId",require("connect-ensure-login").ensureLoggedIn(), getExpenseFromActivity);
 app.get("/activityHeader/:id/", require("connect-ensure-login").ensureLoggedIn(), getActivityHeader);
 app.get("/activityHeaderNew", require("connect-ensure-login").ensureLoggedIn(), getActivityHeaderNew);
 app.post("/activityHeader", require("connect-ensure-login").ensureLoggedIn(), saveActivityHeader);
+app.post("/expense", require("connect-ensure-login").ensureLoggedIn(), saveExpense);
 
 app.get("/loginTemp/:email", loginTemp);
 

@@ -1,5 +1,6 @@
 const PG = require("pg");
 
+
 function getAllExpensesFromActivity(activity_id) {
   const client = new PG.Client(process.env.DATABASE_URL);
   client.connect();
@@ -27,6 +28,29 @@ function getAllExpensesFromActivity(activity_id) {
     });
 }
 
+
+
+function insertExpense (expense){
+  const client = new PG.Client(process.env.DATABASE_URL);
+  client.connect();
+  console.log("expenseEntity",expense);
+  return client.query(
+    "insert into expenses (title,id_activity,id_payer,amount,status) values "
+    + " ($1::varchar, $2::uuid, $3::uuid, $4::float8, $5::varchar)"
+    + " returning (id)",
+    [expense.title,expense.id_activity,expense.id_payer,expense.amount,expense.status])
+    .then((result) => result.rows)
+    .then((data) => {
+      client.end();
+      return data[0].id;
+    })
+    .catch((error) => {
+      console.warn(error);
+      client.end();
+    });
+}
+
 module.exports = {
-  getAllExpensesFromActivity: getAllExpensesFromActivity
+  getAllExpensesFromActivity: getAllExpensesFromActivity,
+  insertExpense: insertExpense
 }

@@ -243,6 +243,37 @@ function newActivity(owner) {
   activity.totalAmount = 0;
 }
 
+function createExpense(expense, currentUser) {
+  expenseEntity = {};
+  expenseEntity.title = expense.expenseTitle;
+  expenseEntity.id_activity = expense.activityId;
+  expenseEntity.id_payer = currentUser.id;
+  expenseEntity.amount = expense.expenseAmount;
+  expenseEntity.status = "1";
+  expenseIdInsert = "";
+
+  return expenses.insertExpense(expenseEntity)
+  .then(expenseId => {
+    expenseIdInsert = expenseId;
+
+/*
+    const PromiseToDo = [];
+    if (expense.expenseMembersId.constructor === Array) {
+      expense.expenseMembersId.forEach(memberId => {
+        promiseToDo.push(expenseMembers.insertExpenseMember(expenseId, memberId));
+
+      });
+    } else {
+      promiseToDo.push(expenseMembers.insertExpenseMember(expenseId,
+      expense.expenseMembersId));
+    }
+    return Promise.all(promiseToDo);
+    */
+    return expenseIdInsert;
+  })
+  .then(res => expenseIdInsert);
+}
+
 module.exports = {
   getActivityWithDetail: getActivityWithDetail,
   getAllActivities: getAllActivities,
@@ -250,5 +281,6 @@ module.exports = {
   createActivityHeader: createActivityHeader,
   updateActivityHeader: updateActivityHeader,
   newActivity: newActivity,
-  getAllExpensesFromActivity: getAllExpensesFromActivity
+  getAllExpensesFromActivity: getAllExpensesFromActivity,
+  createExpense: createExpense
 }
