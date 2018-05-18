@@ -15,7 +15,7 @@ function getActivityHeader(request, result) {
         usersNoMember.push(user);
       }
     })
-    result.render("activityHeader",{"user": request.session.userTemp, "activity": activity, "usersNoMember": usersNoMember});
+    result.render("activityHeader",{"user": request.user, "activity": activity, "usersNoMember": usersNoMember});
   });
 }
 
